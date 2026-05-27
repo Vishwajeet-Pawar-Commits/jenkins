@@ -3,6 +3,7 @@ pipeline {
     stages {
         stage ('PULL STAGE') {
             steps {
+                git 'https://github.com/Vishwajeet-Pawar-Commits/jenkins.git'
                 echo "PULL SUCCESS"
             }
         }
