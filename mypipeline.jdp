@@ -9,7 +9,9 @@ pipeline {
         }
         stage ('BUILD STAGE'){
             steps {
+                dir('backend') {
                 sh 'mvn clean package -DskipTests'
+                }
                 echo "BUILD SUCCESS"
             }
         }
