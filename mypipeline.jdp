@@ -1,26 +1,50 @@
-pipeline {
+ pipeline {
     agent any
+
+    environment {
+        JAVA_HOME = "/usr/lib/jvm/java-17-openjdk-amd64"
+        PATH = "${JAVA_HOME}/bin:${env.PATH}"
+    }
+
     stages {
-        stage ('PULL STAGE') {
+
+        stage('PULL STAGE') {
             steps {
                 git 'https://github.com/Vishwajeet-Pawar-Commits/jenkins.git'
-                echo "PULL GREAT SUCCESS"
+                echo "PULL SUCCESS"
             }
         }
-        stage ('BUILD STAGE'){
+
+        stage('BUILD STAGE') {
             steps {
+                dir('backend') {
+                    sh 'java -version'
+                    sh 'mvn clean package -DskipTests'
+                }
                 echo "BUILD SUCCESS"
             }
         }
-    stage ('TEST STAGE'){
-        steps {
-            echo "TEST SUCCESS"
+
+        stage('TEST STAGE') {
+            steps {
+            withSonarQubeEnv('sonarqube'){
+            dir('backend'){
+            sh '''mvn sonar:sonar \\
+           -Dsonar.projectKey=test-project \\
+           -Dsonar.projectName=\'test-project\' \\
+           -Dsonar.host.url=http://13.205.220.111:9000 \\
+           -Dsonar.token=sqp_9eff9fb22ba3a304ae71a30f4b43305d658e5a6f'''
+                }
+	      }
+
+                echo "TEST SUCCESS"
+            }
+        }
+
+        stage('DEPLOY STAGE') {
+            steps {
+                echo "DEPLOY SUCCESS"
+            }
         }
     }
-    stage ('DEPLOY STAGE'){
-        steps {
-            echo "DEPLOY SUCCESS"
-   }
-  }    
- }
 }
