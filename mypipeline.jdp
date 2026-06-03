@@ -33,12 +33,13 @@ pipeline {
                             mvn sonar:sonar \
                             -Dsonar.projectKey=test-project \
                             -Dsonar.projectName=test-project \
-                            -Dsonar.host.url=http://13.205.220.111:9000 \
-                            -Dsonar.token=YOUR_TOKEN
+                 
                         '''
                     }
+		     echo "TEST SUCCESS"
+
                 }
-                echo "TEST SUCCESS"
+               
             }
         }
 
