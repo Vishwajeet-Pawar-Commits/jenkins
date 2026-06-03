@@ -1,4 +1,4 @@
- pipeline {
+pipeline {
     agent any
 
     environment {
@@ -27,16 +27,17 @@
 
         stage('TEST STAGE') {
             steps {
-            withSonarQubeEnv('sonarqube'){
-            dir('backend'){
-            sh '''mvn sonar:sonar \\
-           -Dsonar.projectKey=test-project \\
-           -Dsonar.projectName=\'test-project\' \\
-           -Dsonar.host.url=http://13.205.220.111:9000 \\
-           -Dsonar.token=sqp_9eff9fb22ba3a304ae71a30f4b43305d658e5a6f'''
+                withSonarQubeEnv('sonarqube') {
+                    dir('backend') {
+                        sh '''
+                            mvn sonar:sonar \
+                            -Dsonar.projectKey=test-project \
+                            -Dsonar.projectName=test-project \
+                            -Dsonar.host.url=http://13.205.220.111:9000 \
+                            -Dsonar.token=YOUR_TOKEN
+                        '''
+                    }
                 }
-	      }
-
                 echo "TEST SUCCESS"
             }
         }
