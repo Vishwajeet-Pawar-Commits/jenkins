@@ -43,6 +43,21 @@ pipeline {
             }
         }
 
+
+          stage('QualityGate STAGE') {
+            steps {
+	        timeout(time: 5, unit: 'MINUTES' ) {
+		waitForQualityGate abortPipeline: false, credentialsId: 'SonarQube'
+                echo "QUALITY OK"
+               }
+           }
+	}
+
+
+
+
+
+
         stage('DEPLOY STAGE') {
             steps {
                 echo "DEPLOY SUCCESS"
