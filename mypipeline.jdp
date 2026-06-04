@@ -60,7 +60,7 @@ pipeline {
 
         stage('DEPLOY STAGE') {
             steps {
-                echo "DEPLOY SUCCESS"
+                echo "GREAT DEPLOY SUCCESS"
             }
         }
     }
